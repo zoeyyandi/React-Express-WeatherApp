@@ -1,0 +1,58 @@
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  font-family: 'Lato', sans-serif;
+  width: 100vw;
+  height: 98%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: 82% 18%;
+  grid-template-areas:
+    'today today today day day day day day day day'
+    'form form form form form form form form form form';
+}
+
+.today {
+  display: grid;
+  grid-area: today;
+  border: 1px solid black;
+}
+
+.weekContainer {
+  display: grid;
+  grid-area: day;
+  border: 1px solid black;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: 'day1 day2 day3 day4 day5 day6 day7';
+}
+
+.form {
+  display: grid;
+  grid-area: form;
+  background-color: black;
+}
+
+.inputBox {
+  justify-self: center;
+  align-self: center;
+  box-sizing: border-box;
+  width: 96%;
+  height: 78%;
+  margin: 10px 20px;
+  font-size: 40px;
+  padding: 5px 20px;
+  color: white;
+  border-radius: 3px;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  background-color: black;
+  border: 1px solid white;
+}
