@@ -15,6 +15,12 @@ class App extends Component {
     };
   }
 
+  componentWillMount() {
+    fetch('/cities')
+      .then(res => res.json())
+      .then(cities => console.log(cities));
+  }
+
   searchCity = city => {
     return cities.filter(
       c => c.name.toLowerCase().indexOf(city.toLowerCase()) >= 0
