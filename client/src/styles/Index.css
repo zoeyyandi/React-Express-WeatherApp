@@ -22,13 +22,11 @@ body,
 .today {
   display: grid;
   grid-area: today;
-  border: 1px solid black;
 }
 
 .weekContainer {
   display: grid;
   grid-area: day;
-  border: 1px solid black;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
   grid-template-areas: 'day1 day2 day3 day4 day5 day6 day7';
@@ -37,22 +35,68 @@ body,
 .form {
   display: grid;
   grid-area: form;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  background: black;
+}
+
+.inputContainer1 {
+  box-sizing: border-box;
+  border: 2px solid white;
+  background: black;
+  align-self: center;
+  justify-self: center;
+  width: 95%;
+  height: 60%;
+}
+
+.inputContainer2 {
+  box-sizing: border-box;
+  border: 2px solid white;
+  background: black;
+  align-self: center;
+  justify-self: center;
+  width: 95%;
+  height: 60%;
+}
+
+.inputGuide {
+  color: white;
+  font-size: 14px;
   background-color: black;
+  width: 131px;
+  margin-left: 20px;
+  padding-left: 15px;
+  margin-right: 0;
+  margin-top: -10px;
+  margin-bottom: 0;
+}
+
+#leftInput {
+  width: 107px;
+}
+
+input::placeholder {
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
 }
 
 .inputBox {
-  justify-self: center;
-  align-self: center;
+  background-color: black;
   box-sizing: border-box;
-  width: 96%;
-  height: 78%;
-  margin: 10px 20px;
-  font-size: 40px;
-  padding: 5px 20px;
   color: white;
+  border: none;
+  font-size: 2.8em;
   border-radius: 3px;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
-  background-color: black;
-  border: 1px solid white;
+  padding-left: 5.5%;
+  padding-top: 2%;
+  width: 100%;
+  height: 80%;
+}
+
+input:focus {
+  outline: none;
 }

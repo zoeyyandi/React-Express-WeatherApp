@@ -21,27 +21,38 @@ class InputCity extends Component {
         // call weather api
       }
     }
-    this.setState({ cityList: this.props.searchCity(city) });
+    // this.setState({ cityList: this.props.searchCity(city) });
   };
 
   render() {
     return (
       <form className="form">
-        {this.state.cityList.length !== 0 && (
-          <ul>
-            <List id="citylist" cities={this.state.cityList} />
-          </ul>
-        )}
-        <input
-          className="inputBox"
-          autoFocus
-          ref={input => (this.textInput = input)}
-          type="text"
-          required
-          list="citylist"
-          placeholder="Enter a City"
-          onChange={this.handleKeyPress}
-        />
+        <legend className="inputContainer1">
+          <p className="inputGuide" id="leftInput">
+            {' '}
+            Enter your city{' '}
+          </p>
+          <input
+            className="inputBox"
+            autoFocus
+            ref={input => (this.textInput = input)}
+            type="text"
+            required
+            placeholder={this.props.defaultCity}
+            onChange={this.handleKeyPress}
+          />
+        </legend>
+        <legend className="inputContainer2">
+          <p className="inputGuide"> Enter your country </p>
+          <input
+            className="inputBox"
+            ref={input => (this.textInput = input)}
+            type="text"
+            required
+            placeholder={this.props.defaultCountry}
+            onChange={this.handleKeyPress}
+          />
+        </legend>
       </form>
     );
   }
