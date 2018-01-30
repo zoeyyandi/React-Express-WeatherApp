@@ -10,13 +10,21 @@ body,
 .container {
   font-family: 'Lato', sans-serif;
   width: 100vw;
-  height: 98%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: 82% 18%;
   grid-template-areas:
     'today today today day day day day day day day'
     'form form form form form form form form form form';
+}
+
+.mainContainer {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
 
 .today {
@@ -87,7 +95,7 @@ input::placeholder {
   box-sizing: border-box;
   color: white;
   border: none;
-  font-size: 2.8em;
+  font-size: 270%;
   border-radius: 3px;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
@@ -99,4 +107,41 @@ input::placeholder {
 
 input:focus {
   outline: none;
+}
+
+.dailyWeather {
+  position: relative;
+  justify-items: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-areas:
+    'day'
+    'skyicon'
+    'temp';
+}
+.icon {
+  grid-area: skyicon;
+  height: auto !important;
+  align-self: end;
+  margin-bottom: 15%;
+}
+
+.temp {
+  align-self: start;
+  grid-area: temp;
+  font-size: 230%;
+  color: white;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
+  height: 0;
+  margin: 0;
+}
+
+.today {
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-areas:
+    'day'
+    'skyicon'
+    'temp';
 }

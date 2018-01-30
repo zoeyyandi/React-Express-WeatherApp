@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
-import List from './List.js';
 
 class InputCity extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cityList: [],
-      error: null
-    };
-  }
-
-  handleKeyPress = event => {
-    const city = this.textInput.value;
-    if (event.key === 'Enter') {
+  handleKeyDown1 = event => {
+    const city = this.cityInput.value;
+    const country = this.countryInput.value;
+    if (event.keyCode === 13 && this.countryInput) {
       event.preventDefault();
-      const matchedCities = this.props.searchCity(city);
-      if (matchedCities.length === 0) {
-        this.setState({ error: 'This city weather is not supported yet' });
-      } else {
-        // call weather api
-      }
+      this.props.updateCity(city, country);
+      this.props.getRealWeather();
     }
-    // this.setState({ cityList: this.props.searchCity(city) });
   };
 
   render() {
@@ -35,22 +22,22 @@ class InputCity extends Component {
           <input
             className="inputBox"
             autoFocus
-            ref={input => (this.textInput = input)}
+            ref={input => (this.cityInput = input)}
             type="text"
             required
             placeholder={this.props.defaultCity}
-            onChange={this.handleKeyPress}
+            onKeyDown={this.handleKeyDown1}
           />
         </legend>
         <legend className="inputContainer2">
           <p className="inputGuide"> Enter your country </p>
           <input
             className="inputBox"
-            ref={input => (this.textInput = input)}
+            ref={input => (this.countryInput = input)}
             type="text"
             required
             placeholder={this.props.defaultCountry}
-            onChange={this.handleKeyPress}
+            onKeyDown={this.handleKeyDown2}
           />
         </legend>
       </form>

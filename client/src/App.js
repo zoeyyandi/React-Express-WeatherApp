@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import * as moment from 'moment';
 import TodaysWeather from './TodaysWeather';
 import WeeklyWeather from './WeeklyWeather';
+import * as moment from 'moment';
 import InputCity from './InputCity';
 import getWeather from './utilities/api.js';
+const Spinner = require('react-spinkit');
+const randomColor = require('randomcolor');
 
 class App extends Component {
   constructor(props) {
@@ -13,47 +15,90 @@ class App extends Component {
       defaultCountry: 'CA',
       searchedCity: null,
       searchedCountry: null,
-      weekWeather: []
+      weekWeather: [],
+      isFetching: false,
+      color: null
     };
   }
 
   componentDidMount() {
+    this.setState({ isFetching: true });
+    this.setState({
+      color: randomColor({ luminosity: 'dark', format: 'hex' })
+    });
     this.getRealWeather();
   }
 
-  async getRealWeather() {
+  getRealWeather = async () => {
     try {
-      let { defaultCity, defaultCountry } = this.state;
+      let {
+        defaultCity,
+        defaultCountry,
+        searchedCity,
+        searchedCountry
+      } = this.state;
       const res = await fetch('/cities');
       const cities = await res.json();
-      const found = cities.find(
-        item =>
-          item.name.toLowerCase() === defaultCity.toLowerCase() &&
-          item.country.toLowerCase() === defaultCountry.toLowerCase()
-      );
+      const found = cities.find(item => {
+        if (searchedCity && searchedCountry) {
+          return (
+            item.name.toLowerCase() === searchedCity.toLowerCase() &&
+            item.country.toLowerCase() === searchedCountry.toLowerCase()
+          );
+        } else {
+          return (
+            item.name.toLowerCase() === defaultCity.toLowerCase() &&
+            item.country.toLowerCase() === defaultCountry.toLowerCase()
+          );
+        }
+      });
       const weekWeather = await getWeather(found.id);
-      this.setState({ weekWeather });
+      this.setState({ isFetching: false, weekWeather });
     } catch (error) {
-      this.setState({ error });
+      console.log(error);
     }
-  }
+  };
 
-  // searchCity = city => {
-  //   return cities.filter(
-  //     c => c.name.toLowerCase().indexOf(city.toLowerCase()) >= 0
-  //   );
-  // };
+  updateCity = (city, country) => {
+    this.setState({
+      isFetching: true,
+      searchedCity: city,
+      searchedCountry: country
+    });
+  };
 
   render() {
     return (
-      <div className="container">
-        <TodaysWeather todaysWeather={this.state.weekWeather[0]} />
-        <WeeklyWeather weekWeather={this.state.weekWeather} />
-        <InputCity
-          searchCity={this.searchCity}
-          defaultCity={this.state.defaultCity}
-          defaultCountry={this.state.defaultCountry}
-        />
+      <div
+        style={{ backgroundColor: this.state.color }}
+        className="mainContainer"
+      >
+        {this.state.isFetching && (
+          <Spinner className="spinner" name="ball-spin-fade-loader" />
+        )}
+        {!this.state.isFetching && (
+          <div className="container">
+            <TodaysWeather
+              todaysWeather={this.state.weekWeather[0]}
+              defaultCity={this.state.defaultCity}
+              defaultCountry={this.state.defaultCountry}
+              searchedCity={this.state.searchedCity}
+              searchedCountry={this.state.searchedCountry}
+              color={this.state.color}
+            />
+            <WeeklyWeather
+              weekWeather={this.state.weekWeather}
+              date={this.state.date}
+              color={this.state.color}
+            />
+            <InputCity
+              updateCity={this.updateCity}
+              getRealWeather={this.getRealWeather}
+              defaultCity={this.state.defaultCity}
+              defaultCountry={this.state.defaultCountry}
+            />
+          </div>
+        )}
       </div>
     );
   }
